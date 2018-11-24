@@ -6,3 +6,5 @@ app = Flask('project')
 app.config['JSON_AS_ASCII'] = False
 app.config['SECRET_KEY'] = 'random'
 app.debug = True
+
+import App.Controllers.LoginController
