@@ -17,7 +17,7 @@ class BaseModel(Base, SmartQueryMixin, ActiveRecordMixin, ReprMixin):
 
 
 db_file = os.path.join(os.path.dirname(__file__), 'test.sqlite')
-engine = sa.create_engine('mysql://root:123@localhost:3306/m', echo=True) # False to force
+engine = sa.create_engine('mysql://root:123@localhost:3306/m', echo=False) # False to force
 session = scoped_session(sessionmaker(bind=engine))
 
 BaseModel.set_session(session)

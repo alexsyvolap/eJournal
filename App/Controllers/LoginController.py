@@ -17,7 +17,7 @@ def login_user():
         if not user:
             return jsonify({'desc': LANG.user['notFind']}), 500
         if user.password == request.json['password']:
-            if not user.token[0]:
+            if not len(user.token):
                 token = user.token
             else:
                 token = user.token[0]
@@ -33,10 +33,11 @@ def login_user():
                     date_life=date)
                 help.session.add(token)
                 help.session.commit()
-                return jsonify({'token': token.token, 'user_status': user.is_teacher, 'user': {
+                return jsonify({'token': token.token, 'user': {
                     'first_name': user.fname,
                     'last_name': user.lname,
-                    'second_name': user.sname
+                    'second_name': user.sname,
+                    'status': user.is_teacher
                 }})
             else:
                 # update TOKEN
@@ -44,10 +45,11 @@ def login_user():
                     token=hash.uuid4().hex,
                     date_life=date)
                 help.session.commit()
-                return jsonify({'token': token.token, 'user_status': user.is_teacher, 'user': {
+                return jsonify({'token': token.token, 'user': {
                     'first_name': user.fname,
                     'last_name': user.lname,
-                    'second_name': user.sname
+                    'second_name': user.sname,
+                    'status': user.is_teacher
                 }})
         else:
             return jsonify({'desc': LANG.user['incPassword']}), 500
