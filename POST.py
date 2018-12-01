@@ -1,8 +1,9 @@
 import requests
-# http://ad6e06fc.ngrok.io
-url = 'http://127.0.0.1:8080'
+from settings import URL
 
-login = '/api/auth/login'
-dataLogin = {'email': 'a', 'password': 'a'}
+url = URL['test']
+
+login = URL['login']
+dataLogin = {'email': '1', 'password': '1'}
 r = requests.post(url=url+login, json=dataLogin)
 print(r.url, r.json())

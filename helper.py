@@ -1,5 +1,6 @@
 import os
 import sqlalchemy as sa
+from settings import DATABSE
 from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 
@@ -16,8 +17,9 @@ class BaseModel(Base, SmartQueryMixin, ActiveRecordMixin, ReprMixin):
 #################### setup ORM ######################
 
 
-db_file = os.path.join(os.path.dirname(__file__), 'test.sqlite')
-engine = sa.create_engine('mysql://root:123@localhost:3306/m', echo=False) # False to force
+db_file = os.path.join(os.path.dirname(__file__), 'test.sql')
+engine = sa.create_engine('mysql://{0}:{1}@{2}:{3}/{4}'.format(DATABSE['user'],
+    DATABSE['password'], DATABSE['host'], DATABSE['port'], DATABSE['base_name']), echo=False)
 session = scoped_session(sessionmaker(bind=engine))
 
 BaseModel.set_session(session)
