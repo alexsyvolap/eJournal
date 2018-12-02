@@ -13,7 +13,7 @@ def login_user():
         return jsonify({'desc': LANG.user['jsonError']}), 500
     try:
         import App.Entity.Users as User
-        user = User.Users.where(id=request.json['email']).first()
+        user = User.Users.where(id=request.json['login']).first()
         if not user:
             return jsonify({'desc': LANG.user['notFind']}), 500
         if user.password == request.json['password']:
