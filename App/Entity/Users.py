@@ -40,6 +40,15 @@ class Groups(help.BaseModel):
     group_user = sa.orm.relationship('Group_User')
 
 
+class Subjects(help.BaseModel):
+    __tablename__ = 'subjects'
+    __repr_attrs__ = ['id', 'name']
+    id = sa.Column(sa.Integer, primary_key=True)
+    name = sa.Column(sa.String(25))
+
+    subjects_group = sa.orm.relationship('Subjects_Group')
+
+
 class Group_User(help.BaseModel):
     __tablename__ = 'user_group'
     __repr_attrs__ = ['user_id', 'group_id']
@@ -48,4 +57,15 @@ class Group_User(help.BaseModel):
     group_id = sa.Column(sa.Integer, sa.ForeignKey('groups.id'))
 
     user = sa.orm.relationship('Users')
+    group = sa.orm.relationship('Groups')
+
+
+class Subjects_Group(help.BaseModel):
+    __tablename__ = 'subjects_group'
+    __repr_attrs__ = ['group_id', 'subject_id']
+    id = sa.Column(sa.Integer, primary_key=True)
+    group_id = sa.Column(sa.Integer, sa.ForeignKey('groups.id'))
+    subject_id = sa.Column(sa.String(25), sa.ForeignKey('subjects.id'))
+
+    subject = sa.orm.relationship('Subjects')
     group = sa.orm.relationship('Groups')
