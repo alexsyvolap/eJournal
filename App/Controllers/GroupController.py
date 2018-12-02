@@ -21,10 +21,10 @@ def group_user():
             return jsonify({'desc': LANG.user['notFind']}), 500
         if user.user.status == 1:
             # teacher
-            arr = {'groups': []}
+            arr = []
             groups = User.Group_User.where(user_id=user.user.id).all()
             for group in groups:
-                arr['groups'].append({
+                arr.append({
                     'id': group.group_id,
                     'name': group.group.name
                 })
