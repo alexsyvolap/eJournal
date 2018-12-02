@@ -19,3 +19,8 @@ login = URL['subjects']
 dataLogin = {'token': token, 'group_id': group_id}
 r = requests.post(url=url+login, json=dataLogin)
 print(r.url, r.json())
+
+login = URL['logout']
+dataLogin = {'token': token}
+r = requests.post(url=url+login, json=dataLogin)
+print(r.url, r.json())
