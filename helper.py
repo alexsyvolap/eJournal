@@ -18,8 +18,8 @@ class BaseModel(Base, SmartQueryMixin, ActiveRecordMixin, ReprMixin):
 
 
 db_file = os.path.join(os.path.dirname(__file__), 'test.sql')
-engine = sa.create_engine('mysql://{0}:{1}@{2}:{3}/{4}'.format(DATABSE['user'],
-    DATABSE['password'], DATABSE['host'], DATABSE['port'], DATABSE['base_name']), echo=False)
+engine = sa.create_engine('mysql://{0}:{1}@{2}:{3}/{4}?{5}'.format(DATABSE['user'],
+    DATABSE['password'], DATABSE['host'], DATABSE['port'], DATABSE['base_name'], DATABSE['charset']), echo=False)
 session = scoped_session(sessionmaker(bind=engine))
 
 BaseModel.set_session(session)
