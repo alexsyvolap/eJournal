@@ -9,7 +9,7 @@ from settings import HOST
 app = Flask('App')
 app.config['JSON_AS_ASCII'] = False
 app.config['SECRET_KEY'] = HOST['secret']
-app.debug = False
+app.debug = True
 
 #################### setup LOG ######################
 
@@ -24,3 +24,4 @@ app.logger.addHandler(handler)
 
 
 import App.Controllers.LoginController
+import App.Controllers.GroupController
