@@ -37,7 +37,7 @@ def login_user():
                     'first_name': user.fname,
                     'last_name': user.lname,
                     'second_name': user.sname,
-                    'status': user.is_teacher
+                    'status': user.status
                 }})
             else:
                 # update TOKEN
@@ -49,7 +49,7 @@ def login_user():
                     'first_name': user.fname,
                     'last_name': user.lname,
                     'second_name': user.sname,
-                    'status': user.is_teacher
+                    'status': user.status
                 }})
         else:
             return jsonify({'desc': LANG.user['incPassword']}), 500
