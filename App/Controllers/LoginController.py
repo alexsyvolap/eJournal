@@ -6,7 +6,7 @@ import helper as help
 
 
 @app.route('/api/auth/login', methods=['POST'])
-# TODO: Принимает email, password
+# TODO: Принимает login, password
 # TODO: Возвращает token
 def login_user():
     if not request.json:
@@ -53,5 +53,25 @@ def login_user():
                 }})
         else:
             return jsonify({'desc': LANG.user['incPassword']}), 500
+    except KeyError as e:
+        return jsonify({'desc': str(e)}), 500
+
+
+@app.route('/api/auth/logout', methods=['POST'])
+# TODO: Принимает token
+# TODO: Возвращает status-code
+def logout_user():
+    if not request.json:
+        return jsonify({'desc': LANG.user['jsonError']}), 500
+    try:
+        import App.Entity.Users as User
+        token = request.json['token']
+        user = User.Tokens.where(token=token).first()
+        if not user:
+            return jsonify({'desc': LANG.user['notFind']}), 500
+        else:
+            user.update(token='')
+            help.session.commit()
+            return jsonify({'desc': LANG.user['logout']}), 200
     except KeyError as e:
         return jsonify({'desc': str(e)}), 500
