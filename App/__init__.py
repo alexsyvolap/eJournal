@@ -5,8 +5,10 @@ from logging.handlers import RotatingFileHandler
 import datetime
 import logging
 from settings import HOST
+from flask_cors import CORS
 
 app = Flask('App')
+CORS(app)
 app.config['JSON_AS_ASCII'] = False
 app.config['SECRET_KEY'] = HOST['secret']
 app.debug = True
