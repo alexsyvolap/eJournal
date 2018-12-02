@@ -2,7 +2,6 @@
 from App import app
 from flask import request, jsonify
 import lang as LANG
-import helper as help
 
 
 @app.route('/api/group/get', methods=['POST'])
@@ -50,5 +49,35 @@ def group_user():
                                 'second_name': student.user.sname
                             })
             return jsonify(arr), 200
+    except KeyError as e:
+        return jsonify({'desc': str(e)}), 500
+
+
+@app.route('/api/group/subjects', methods=['POST'])
+# TODO: Принимает token, group_id
+# TODO: Возвращает {
+# TODO: список предметов данной группы
+# TODO: }
+def subjects_group():
+    if not request.json:
+        return jsonify({'desc': LANG.user['jsonError']}), 500
+    try:
+        import App.Entity.Users as User
+        user = User.Tokens.where(token=request.json['token']).first()
+        if not user:
+            return jsonify({'desc': LANG.user['notFind']}), 500
+        else:
+            if not request.json['group_id']:
+                return jsonify({'desc': LANG.user['jsonError']}), 500
+            else:
+                group_id = request.json['group_id']
+                subjects = User.Subjects_Group.where(group_id=group_id).all()
+                arr = []
+                for subject in subjects:
+                    arr.append({
+                        'id': subject.subject.id,
+                        'name': subject.subject.name
+                    })
+                return jsonify(arr), 200
     except KeyError as e:
         return jsonify({'desc': str(e)}), 500
