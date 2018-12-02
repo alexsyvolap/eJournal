@@ -4,7 +4,7 @@ from flask import request, jsonify
 import lang as LANG
 
 
-@app.route('/api/group/get', methods=['POST'])
+@app.route('/api/group/list', methods=['POST'])
 # TODO: Принимает token
 # TODO: Возвращает {
 # TODO: если вы учитель - СПИСОК ГРУПП в которых вы преподаете
