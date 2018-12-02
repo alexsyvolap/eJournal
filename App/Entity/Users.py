@@ -8,15 +8,16 @@ from sqlalchemy.orm import Query
 
 class Users(help.BaseModel):
     __tablename__ = 'users'
-    __repr_attrs__ = ['id', 'fname', 'lname', 'sname', 'password', 'is_teacher']
+    __repr_attrs__ = ['id', 'fname', 'lname', 'sname', 'password', 'status']
     id = sa.Column(sa.String(25), primary_key=True)
     fname = sa.Column(sa.String(25))
     lname = sa.Column(sa.String(25))
     sname = sa.Column(sa.String(25))
     password = sa.Column(sa.String(25))
-    is_teacher = sa.Column(sa.SmallInteger)
+    status = sa.Column(sa.SmallInteger)
 
     token = sa.orm.relationship('Tokens')
+    group = sa.orm.relationship('Group_User')
 
 
 class Tokens(help.BaseModel):
@@ -28,3 +29,23 @@ class Tokens(help.BaseModel):
     date_life = sa.Column(sa.DateTime)
 
     user = sa.orm.relationship('Users')
+
+
+class Groups(help.BaseModel):
+    __tablename__ = 'groups'
+    __repr_attrs__ = ['id', 'name']
+    id = sa.Column(sa.Integer, primary_key=True)
+    name = sa.Column(sa.String(25))
+
+    group_user = sa.orm.relationship('Group_User')
+
+
+class Group_User(help.BaseModel):
+    __tablename__ = 'user_group'
+    __repr_attrs__ = ['user_id', 'group_id']
+    id = sa.Column(sa.Integer, primary_key=True)
+    user_id = sa.Column(sa.String(25), sa.ForeignKey('users.id'))
+    group_id = sa.Column(sa.Integer, sa.ForeignKey('groups.id'))
+
+    user = sa.orm.relationship('Users')
+    group = sa.orm.relationship('Groups')
